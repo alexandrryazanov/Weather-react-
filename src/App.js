@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Weather from './Weather.js'
+import Menu from './Menu.js'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const PLACES = [
+  { name: "Palo Alto", zip: "94303" },
+  { name: "San Jose", zip: "94088" },
+  { name: "Santa Cruz", zip: "95062" },
+  { name: "Honolulu", zip: "96803" },
+  { name: "ZVL", zip: "606522" }
+];
+
+//--Главный компонент
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      activePlace: 0,
+    };
+  }
+
+  updateActivePlaceFunc = (value) => {
+    this.setState({ activePlace: value })
+  }
+
+  render() {
+    const activePlace = this.state.activePlace;
+    return (
+      <div className="App">
+        <header><h1>React Simple Weather App</h1></header>
+        <div className="container">
+          <Menu updateActivePlaceFunc={this.updateActivePlaceFunc} places={PLACES} />
+          <Weather key={activePlace} zip={PLACES[activePlace].zip} />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
